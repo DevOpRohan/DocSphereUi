@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
-const SERVER_URL = "https://monkfish-app-vxijg.ondigitalocean.app";
+const SERVER_URL = "https://6e94-3-223-72-184.ngrok-free.app";
 
 const UploadDocument = ({ onDocumentDataReceived }) => {
   const [selectedFile, setSelectedFile] = useState(null);

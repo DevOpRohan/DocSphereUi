@@ -35,11 +35,56 @@ const Chat = () => {
     }
   };
 
+  // const fetchBotMessage = useCallback(() => {
+  //   fetch(`https://walrus-app-hodhq.ondigitalocean.app/ultron?q=${userMessage}`)
+  //     .then((response) => response.text())
+  //     .then((data) => {
+  //       const botMessage = { message: data, isBot: true };
+  //       setChatMessages((prevChatMessages) => [
+  //         ...prevChatMessages.slice(0, -1),
+  //         botMessage
+  //       ]);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [userMessage]);
+
   const fetchBotMessage = useCallback(() => {
-    fetch(`https://walrus-app-hodhq.ondigitalocean.app/ultron?q=${userMessage}`)
-      .then((response) => response.text())
+    fetch(
+      `https://6e94-3-223-72-184.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "1"
+        }
+      }
+    )
+      .then((response) => response.json())
       .then((data) => {
-        const botMessage = { message: data, isBot: true };
+        console.log(data);
+        const formattedAnswer = formatMessage(data.answer);
+        const references = data.reference.map((ref, index) => (
+          <a
+            key={index}
+            href={`https://6e94-3-223-72-184.ngrok-free.app/?file=${ref.link}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginRight: "8px" }}
+          >
+            [link{index + 1}]
+          </a>
+        ));
+
+        const botMessage = {
+          message: (
+            <>
+              {formattedAnswer}
+              <br />
+              {references}
+            </>
+          ),
+          isBot: true
+        };
         setChatMessages((prevChatMessages) => [
           ...prevChatMessages.slice(0, -1),
           botMessage
@@ -66,22 +111,26 @@ const Chat = () => {
   }, [chatMessages]);
 
   const formatMessage = (message) => {
-    return message.split("```").map((snippet, index) => {
-      if (index % 2 === 1) {
-        return <CodeFormatter key={index} snippet={snippet} />;
-      } else {
-        return (
-          <span key={index}>
-            {snippet.split("\n").map((line, i) => (
-              <React.Fragment key={i}>
-                {line}
-                <br />
-              </React.Fragment>
-            ))}
-          </span>
-        );
-      }
-    });
+    if (typeof message === "string") {
+      return message.split("```").map((snippet, index) => {
+        if (index % 2 === 1) {
+          return <CodeFormatter key={index} snippet={snippet} />;
+        } else {
+          return (
+            <span key={index}>
+              {snippet.split("\n").map((line, i) => (
+                <React.Fragment key={i}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </span>
+          );
+        }
+      });
+    } else {
+      return message;
+    }
   };
 
   const clearChat = () => {
@@ -149,7 +198,9 @@ const Chat = () => {
               }}
             >
               {message.isBot ? (
-                <BotMessage message={formatMessage(message.message)} />
+                <BotMessage
+                  message={message.message && formatMessage(message.message)}
+                />
               ) : (
                 <UserMessage message={formatMessage(message.message)} />
               )}
