@@ -35,24 +35,9 @@ const Chat = () => {
     }
   };
 
-  // const fetchBotMessage = useCallback(() => {
-  //   fetch(`https://walrus-app-hodhq.ondigitalocean.app/ultron?q=${userMessage}`)
-  //     .then((response) => response.text())
-  //     .then((data) => {
-  //       const botMessage = { message: data, isBot: true };
-  //       setChatMessages((prevChatMessages) => [
-  //         ...prevChatMessages.slice(0, -1),
-  //         botMessage
-  //       ]);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, [userMessage]);
-
   const fetchBotMessage = useCallback(() => {
     fetch(
-      `https://4dad-54-243-246-120.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
+      `https://1943-3-223-72-184.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
       {
         headers: {
           "ngrok-skip-browser-warning": "1"
@@ -62,18 +47,37 @@ const Chat = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        const formattedAnswer = formatMessage(data.answer);
-        const references = data.reference.map((ref, index) => (
-          <a
-            key={index}
-            href={`https://4dad-54-243-246-120.ngrok-free.app/?file=${ref.link}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ marginRight: "8px" }}
-          >
-            [link{index + 1}]
-          </a>
-        ));
+        const isError = data.answer.startsWith("@error:");
+        const formattedAnswer = formatMessage(
+          isError ? data.answer.replace("@error:", "") : data.answer
+        );
+
+        // Group the links by their file names
+        const groupedLinks = data.reference.reduce((acc, ref) => {
+          if (!acc[ref.link]) {
+            acc[ref.link] = [];
+          }
+          acc[ref.link].push(ref.pageNo);
+          return acc;
+        }, {});
+
+        // Create the link elements with the grouped page numbers
+        const references = isError
+          ? null
+          : Object.entries(groupedLinks).map(([link, pages], index) => (
+              <a
+                key={index}
+                href={`https://1943-3-223-72-184.ngrok-free.app/?file=${link}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginRight: "8px" }}
+              >
+                link{index + 1}
+                {pages.map((page, i) => (
+                  <span key={i}>[{page}]</span>
+                ))}
+              </a>
+            ));
 
         const botMessage = {
           message: (
