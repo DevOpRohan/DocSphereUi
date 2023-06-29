@@ -4,7 +4,7 @@ import {
   Text,
   TextField,
   getTheme,
-  mergeStyleSets
+  mergeStyleSets,
 } from "@fluentui/react";
 import BotMessage from "./BotMessage";
 import CodeFormatter from "./CodeFormatter";
@@ -29,7 +29,7 @@ const Chat = () => {
       setChatMessages((prevChatMessages) => [
         ...prevChatMessages,
         { message: userMessage, isBot: false },
-        botMessage
+        botMessage,
       ]);
       setIsButtonClicked(true);
     }
@@ -37,11 +37,11 @@ const Chat = () => {
 
   const fetchBotMessage = useCallback(() => {
     fetch(
-      `https://1943-3-223-72-184.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
+      `https://2dcf-54-243-246-120.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
       {
         headers: {
-          "ngrok-skip-browser-warning": "1"
-        }
+          "ngrok-skip-browser-warning": "1",
+        },
       }
     )
       .then((response) => response.json())
@@ -67,7 +67,7 @@ const Chat = () => {
           : Object.entries(groupedLinks).map(([link, pages], index) => (
               <a
                 key={index}
-                href={`https://1943-3-223-72-184.ngrok-free.app/?file=${link}`}
+                href={`https://2dcf-54-243-246-120.ngrok-free.app/?file=${link}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ marginRight: "8px" }}
@@ -87,11 +87,11 @@ const Chat = () => {
               {references}
             </>
           ),
-          isBot: true
+          isBot: true,
         };
         setChatMessages((prevChatMessages) => [
           ...prevChatMessages.slice(0, -1),
-          botMessage
+          botMessage,
         ]);
       })
       .catch((error) => {
@@ -146,12 +146,12 @@ const Chat = () => {
     title: {
       fontWeight: "bold",
       fontSize: "2rem",
-      color: theme.palette.themePrimary
+      color: theme.palette.themePrimary,
     },
     inputContainer: {
       width: "100%",
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
     },
     inputBox: {
       flexGrow: 1,
@@ -165,12 +165,12 @@ const Chat = () => {
       paddingBottom: "4px",
       // backgroundColor: theme.palette.neutralLighter,
       ":hover": {
-        borderColor: theme.palette.themeDark
+        borderColor: theme.palette.themeDark,
       },
       ":focus-within": {
-        borderColor: theme.palette.themeDark
-      }
-    }
+        borderColor: theme.palette.themeDark,
+      },
+    },
   });
 
   return (
@@ -178,7 +178,7 @@ const Chat = () => {
       {/* <Text className={classNames.title}>Ultron</Text> */}
       <MainLayout
         style={{
-          width: "100%"
+          width: "100%",
         }}
       />
 
@@ -188,7 +188,7 @@ const Chat = () => {
             display: "flex",
             flexDirection: "column",
             height: "70vh",
-            overflow: "auto"
+            overflow: "auto",
           }}
           ref={chatContainerRef}
         >
@@ -198,7 +198,7 @@ const Chat = () => {
               style={{
                 display: "flex",
                 justifyContent: message.isBot ? "flex-start" : "flex-end",
-                marginBottom: "8px"
+                marginBottom: "8px",
               }}
             >
               {message.isBot ? (
@@ -220,7 +220,7 @@ const Chat = () => {
             cursor: "pointer",
             fontSize: "1.5rem",
             color: theme.palette.redDark,
-            alignSelf: "center"
+            alignSelf: "center",
           }}
           onClick={clearChat}
         />
@@ -241,7 +241,7 @@ const Chat = () => {
             cursor: "pointer",
             fontSize: "1.5rem",
             color: theme.palette.themePrimary,
-            alignSelf: "center"
+            alignSelf: "center",
           }}
           onClick={handleSendMessage}
         />
