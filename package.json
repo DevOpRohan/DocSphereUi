@@ -1,5 +1,5 @@
 {
-  "name": "ultron",
+  "name": "docsphere",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -39,5 +39,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "repository": "https://github.com/DevOpRohan/DocSphereUi",
+  "author": "Rohan Verma <86923317+DevOpRohan@users.noreply.github.com>",
+  "license": "MIT"
 }
