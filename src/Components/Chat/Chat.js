@@ -37,7 +37,7 @@ const Chat = () => {
 
   const fetchBotMessage = useCallback(() => {
     fetch(
-      `https://a4bf-34-197-127-12.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
+      `https://3f6a-54-80-185-234.ngrok-free.app=${userMessage} && k=2`,
       {
         headers: {
           "ngrok-skip-browser-warning": "1",
@@ -67,7 +67,7 @@ const Chat = () => {
           : Object.entries(groupedLinks).map(([link, pages], index) => (
               <a
                 key={index}
-                href={`https://a4bf-34-197-127-12.ngrok-free.app/?file=${link}`}
+                href={`https://3f6a-54-80-185-234.ngrok-free.app/?file=${link}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ marginRight: "8px" }}
