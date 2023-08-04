@@ -37,7 +37,7 @@ const Chat = () => {
 
   const fetchBotMessage = useCallback(() => {
     fetch(
-      `https://3f6a-54-80-185-234.ngrok-free.app=${userMessage} && k=2`,
+      `https://3f6a-54-80-185-234.ngrok-free.app/get_answer/?question=${userMessage} && k=2`,
       {
         headers: {
           "ngrok-skip-browser-warning": "1",
