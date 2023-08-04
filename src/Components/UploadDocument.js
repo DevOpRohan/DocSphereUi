@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
-const SERVER_URL = "https://a4bf-34-197-127-12.ngrok-free.app";
+const SERVER_URL = "https://3f6a-54-80-185-234.ngrok-free.app";
 
 const UploadDocument = ({ onDocumentDataReceived }) => {
   const [selectedFile, setSelectedFile] = useState(null);
