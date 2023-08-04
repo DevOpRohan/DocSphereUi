@@ -27,7 +27,7 @@ const MainLayout = () => {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            DocSphere
+            DocuChat
           </Typography>
           <UploadDocument onDocumentDataReceived={handleDocumentDataReceived} />
         </Toolbar>
